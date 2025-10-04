@@ -1,0 +1,10 @@
+all:
+  children:
+    myhosts:
+      hosts:
+        host1:
+          ansible_host: 192.0.2.50
+        host2:
+          ansible_host: 192.0.2.51
+        host3:
+          ansible_host: 192.0.2.52
