@@ -1,0 +1,29 @@
+---
+- name: Install and verify Apache Web Server on Ubuntu
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update package index
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Apache
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+
+    - name: Ensure Apache is started and enabled at boot
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Verify Apache service is active
+      ansible.builtin.shell: systemctl is-active apache2
+      register: apache_status
+      changed_when: false
+
+    - name: Display Apache status
+      ansible.builtin.debug:
+        msg: "Apache service is {{ apache_status.stdout }}"
